@@ -1,0 +1,57 @@
+# Consider a situation when one array has every elements and in another something is missing
+# Return this element
+
+# contain special dictionary which put new key when it's unavailable
+import collections
+
+
+# we can sort both arrays and iterate over them simultaneously. Once two iterators have different values we can stop.
+# The value of the small iterator is the missing element. This solution is also O(NlogN).
+
+def finder1(arr1, arr2):
+    # Sort the arrays
+    arr1.sort()
+    arr2.sort()
+
+    # How it's look like
+    output = zip(arr1, arr2)
+    print('\n'.join(map(str, list(output))))
+
+    for num1, num2 in zip(arr1, arr2):
+        # Return if pair is different
+        if num1 != num2:
+            return min(num1, num2)
+    # case when the last element is missing
+    return max(arr1[-1], arr2[-1])
+
+
+# linear time solution. We can use a hashtable and store  the number of times each element appears in the second array.
+# Then for each element in the first array we decrement its counter.
+# Once hit an element with zero count that’s the missing element.
+
+def finder2(arr1, arr2):
+    d = collections.defaultdict(int)
+    for num in arr1:
+        d[num] += 1
+
+    for num in arr2:
+        if d[num] == 0:
+            return num
+        else:
+            d[num] -= 1
+
+
+print(finder2([1, 2, 3, 4], [1, 5, 2, 4, 3]))
+
+
+# We we can achieve linear time and constant space complexity.
+# initialize a variable to 0, then XOR every element in the first and second arrays with that variable.
+# In the end, the value of the variable is the result, missing element in array2.
+
+def finder3(arr1, arr2):
+    result = 0
+
+    for num in arr1 + arr2:
+        result ^= num
+        print(result)
+    return result
