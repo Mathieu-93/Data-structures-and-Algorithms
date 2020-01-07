@@ -17,3 +17,16 @@ class Stack(object):
 
     def size(self):
         return len(self.items)
+
+
+# Stack check
+
+s = Stack()
+print(s.isEmpty())
+s.push(1)
+s.push('Two')
+s.push(True)
+print("Size of stack: " + str(s.size()))
+print(s.pop())
+print("Size of stack: " + str(s.size()))
+print(s.peek())
